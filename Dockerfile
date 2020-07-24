@@ -14,10 +14,4 @@ VOLUME /cfssl
 WORKDIR /cfssl
 
 ENTRYPOINT [ "cfssl", "serve", "-address=0.0.0.0" ]
-CMD [
-        "-port=8888",
-        "-ca=rootca/rootca.pem",
-        "-ca-key=rootca/rootca-key.pem",
-        "-config=rootca/config.json",
-        "-loglevel", "1"
-]
+CMD [ "-port=8888", "-ca=rootca/rootca.pem", "-ca-key=rootca/rootca-key.pem", "-config=rootca/config.json", "-loglevel", "1" ]
