@@ -4,6 +4,8 @@ A Dockerfile to provision the newest
 [cfssl](https://github.com/cloudflare/cfssl). Suitable for running as
 a PKI component in dev environments.
 
+Support OCSP. No stapling.
+
 Mount your cert volume at `/cfssl`.
 
 ## Generating the CA
@@ -18,6 +20,17 @@ There is a self-signed root CA which is used for all resources and for revocatio
 will generate `rootca-key.pem`, `rootca.pem`, and `rootca.csr` (for cross-signing).
 
 Policies are defined in `rootca/config.json` for *server*, *peer*, and *client* roles. The authentication key can be generated with `openssl rand -hex 16` and set in `CFSSL_API_KEY`. 
+
+## OCSP
+
+Install goose and create a SQLite database using the cfssl source.
+
+``` shellsession
+% go get bitbucket.org/liamstask/goose/cmd/goose
+% goose -path certdb/sqlite -env production up
+```
+
+A `certstore_production.db` file will be created in the current dir. This file is to be referenced in `db.json`. The `config.json` would have `oscp_url` and `crl_url`. An example of each file is provided.
 
 ## Generating an intemediate CA
 

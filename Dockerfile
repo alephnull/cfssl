@@ -1,6 +1,6 @@
 FROM golang:latest AS builder
 
-LABEL version="1.0"
+LABEL version="1.1"
 
 ENV GOPATH "/go"
 RUN CGO_ENABLED=0 go get -u github.com/cloudflare/cfssl/cmd/...
@@ -14,4 +14,4 @@ VOLUME /cfssl
 WORKDIR /cfssl
 
 ENTRYPOINT [ "cfssl", "serve", "-address=0.0.0.0" ]
-CMD [ "-port=8888", "-ca=rootca/rootca.pem", "-ca-key=rootca/rootca-key.pem", "-config=rootca/config.json", "-loglevel", "1" ]
+CMD [ "-port=8888", '-db-config=db.json', "-ca=rootca/rootca.pem", "-ca-key=rootca/rootca-key.pem", "-config=config.json", "-loglevel", "1" ]
