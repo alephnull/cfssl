@@ -1,9 +1,9 @@
 FROM golang:latest AS builder
 
-LABEL version="1.1"
+LABEL version="1.2"
 
 ENV GOPATH "/go"
-RUN CGO_ENABLED=0 go get -u github.com/cloudflare/cfssl/cmd/...
+RUN go get -u github.com/cloudflare/cfssl/cmd/...
 
 FROM alpine:latest
 COPY --from=builder /go/bin/* /usr/local/bin/
